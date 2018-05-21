@@ -1,0 +1,37 @@
+2018-05-21 17:28:27,975 manager INFO 1.1.0
+2018-05-21 17:28:27,976 manager INFO Copyright (C) 2003-2010
+2018-05-21 17:28:27,976 manager INFO   Noriaki Ando
+2018-05-21 17:28:27,976 manager INFO   Intelligent Systems Research Institute, AIST
+2018-05-21 17:28:27,976 manager INFO Manager starting.
+2018-05-21 17:28:27,976 manager INFO Starting local logging.
+2018-05-21 17:28:27,977 manager.namingmanager INFO NameServer connection succeeded: corba/localhost
+2018-05-21 17:28:27,979 ManagerServant INFO Master manager not found
+2018-05-21 17:28:27,979 manager WARNING Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/OpenRTM_aist/Manager.py", line 1900, in initManagerServant
+    reffile = file(self._config.getProperty("manager.refstring_path"),'w')
+IOError: [Errno 13] Permission denied: '/var/log/rtcmanager.ref'
+
+2018-05-21 17:28:27,979 LocalServiceAdmin INFO All the local services are enabled.
+2018-05-21 17:28:27,981 manager INFO Component type conf file: RGBDcameraViewer.conf loaded.
+2018-05-21 17:28:27,982 ec_base INFO setRate(1000000.000000) done
+2018-05-21 17:28:27,982 ec_base INFO setRate(1000.000000) done
+2018-05-21 17:28:27,983 rtobject INFO 1 execution context was created.
+2018-05-21 17:28:27,983 rtobject INFO Initial active configuration set is default.
+2018-05-21 17:28:51,284 SdoServiceAdmin WARNING No available SDO service in the factory: 
+2018-05-21 17:28:51,284 SdoServiceAdmin ERROR type  already exists.
+2018-05-21 17:28:51,285 SdoServiceAdmin WARNING No available SDO service in the factory: IDL:OpenRTM/ComponentObserver:1.0
+2018-05-21 17:28:51,285 SdoServiceAdmin ERROR type b7d48857-57af-4fab-a4f5-d8284d91f6ed already exists.
+2018-05-21 17:31:04,760 rtobject ERROR Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/OpenRTM_aist/RTObject.py", line 1560, in on_execute
+    ret = self.onExecute(ec_id)
+  File "RGBDcameraViewer.py", line 216, in onExecute
+    img = np.zeros((height, width, channels),np.unit16)
+AttributeError: 'module' object has no attribute 'unit16'
+
+2018-05-21 17:31:14,033 ec_worker ERROR State of the RTC is not INACTIVE_STATE.
+2018-05-21 17:31:20,105 ec_worker ERROR State of the RTC is not ACTIVE_STATE.
+2018-05-21 17:31:26,025 ec_worker ERROR State of the RTC is not ACTIVE_STATE.
+2018-05-21 17:31:47,387 ec_worker ERROR State of the RTC is not ACTIVE_STATE.
+2018-05-21 17:32:38,127 ec_worker ERROR State of the RTC is not ACTIVE_STATE.
+2018-05-21 17:32:38,130 ec_worker WARNING ExecutionContext is already stopped.
+2018-05-21 17:32:38,130 ec_base ERROR Invoking on_shutdown() for each RTC failed.

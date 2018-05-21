@@ -1,0 +1,54 @@
+# RGBDcameraViewer CMake config file
+#
+# This file sets the following variables:
+# RGBDcameraViewer_FOUND - Always TRUE.
+# RGBDcameraViewer_INCLUDE_DIRS - Directories containing the RGBDcameraViewer include files.
+# RGBDcameraViewer_IDL_DIRS - Directories containing the RGBDcameraViewer IDL files.
+# RGBDcameraViewer_LIBRARIES - Libraries needed to use RGBDcameraViewer.
+# RGBDcameraViewer_DEFINITIONS - Compiler flags for RGBDcameraViewer.
+# RGBDcameraViewer_VERSION - The version of RGBDcameraViewer found.
+# RGBDcameraViewer_VERSION_MAJOR - The major version of RGBDcameraViewer found.
+# RGBDcameraViewer_VERSION_MINOR - The minor version of RGBDcameraViewer found.
+# RGBDcameraViewer_VERSION_REVISION - The revision version of RGBDcameraViewer found.
+# RGBDcameraViewer_VERSION_CANDIDATE - The candidate version of RGBDcameraViewer found.
+
+message(STATUS "Found RGBDcameraViewer-@PROJECT_VERSION@")
+set(RGBDcameraViewer_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(RGBDcameraViewer_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(RGBDcameraViewer_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(RGBDcameraViewer_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(RGBDcameraViewer_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(RGBDcameraViewer_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(RGBDcameraViewer_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(RGBDcameraViewer_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(RGBDcameraViewer_VERSION @PROJECT_VERSION@)
+set(RGBDcameraViewer_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(RGBDcameraViewer_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(RGBDcameraViewer_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(RGBDcameraViewer_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
