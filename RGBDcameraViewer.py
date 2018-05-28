@@ -181,7 +181,10 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         #
         #
     def onActivated(self, ec_id):
-        print('onActivated')
+        print('Start image view')
+
+        cv2.namedWindow("img", cv2.WINDOW_AUTOSIZE)
+        
         return RTC.RTC_OK
     
         ##
@@ -195,7 +198,13 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         #
         #
     def onDeactivated(self, ec_id):
-    
+
+        
+        cv2.destroyAllWindows()
+        print("Stop image view.")
+
+        img.release()
+        
         return RTC.RTC_OK
     
         ##
@@ -212,19 +221,18 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         width = self._frame_width
         height = self._frame_height
         channels = 3
+        
+        img = np.zeros((height, width, channels), np.uint8)
 
-        img = np.zeros((height, width, channels),np.unit16)
-
-        for h in range(height):
-            for w in range(width):
-                img[h, w][0] = self._in_image[0]
-                img[h, w][1] = self._in_image[1]
-                img[h, w][2] = self._in_image[2]
-
+        for i in range(0, height):
+            for j in range(0, width):
+                index = (i * width + j) * 3;
+                img[h, w][index + 2] = self._rgbdCameraImageIn.data[index + 2]
+                img[h, w][index + 1] = self._rgbdCameraImageIn.data[index + 1]
+                img[h, w][index + 0] = self._rgbdCameraImageIn.data[index + 0]
 
         cv2.imshow('image', img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
     
         return RTC.RTC_OK
     
