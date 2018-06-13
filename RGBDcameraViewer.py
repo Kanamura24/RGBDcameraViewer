@@ -15,6 +15,7 @@ sys.path.append(".")
 
 # capture
 import numpy as np
+from numpy import array
 import cv2
 
 # Import RTM module
@@ -90,7 +91,7 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         """
         self._frame_width = [640]
 
-        self._model = None
+        #self._model = None
 
         """
         
@@ -184,6 +185,8 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         print('Start image view')
 
         cv2.namedWindow("img", cv2.WINDOW_AUTOSIZE)
+
+        m_img = np.zeros((640, 480, 3), np.uint8)
         
         return RTC.RTC_OK
     
@@ -202,8 +205,6 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         
         cv2.destroyAllWindows()
         print("Stop image view.")
-
-        img.release()
         
         return RTC.RTC_OK
     
@@ -218,20 +219,23 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         #
         #
     def onExecute(self, ec_id):
+
+        if self._rgbdCameraImageIn.isNew():
+            m_color_data = self._rgbdCameraImageIn.read()
+            print "kitayo"
+
+            for i in range(0, *height):
+                for j in range(0, *width):
+                    index = (i * array(width) + j) * 3
+                    m_img[h, w][2] = m_color_data.data.cameraImage.image.raw_data[index + 2] # b
+                    m_img[h, w][1] = self._rgbdCameraImageIn.data.cameraImage.image.raw_data[index + 1] # g
+                    m_img[h, w][0] = self._rgbdCameraImageIn.data.cameraImage.image.raw_data[index + 0] # r
+            cv2.imshow('image', m_img)
+
+            
         width = self._frame_width
         height = self._frame_height
         channels = 3
-        
-        img = np.zeros((height, width, channels), np.uint8)
-
-        for i in range(0, height):
-            for j in range(0, width):
-                index = (i * width + j) * 3;
-                img[h, w][index + 2] = self._rgbdCameraImageIn.data[index + 2]
-                img[h, w][index + 1] = self._rgbdCameraImageIn.data[index + 1]
-                img[h, w][index + 0] = self._rgbdCameraImageIn.data[index + 0]
-
-        cv2.imshow('image', img)
 
     
         return RTC.RTC_OK
