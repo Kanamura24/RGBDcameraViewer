@@ -222,7 +222,6 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
 
         if self._rgbdCameraImageIn.isNew():
             m_color_data = self._rgbdCameraImageIn.read()
-            print "kitayo"
 
             for i in range(0, *height):
                 for j in range(0, *width):
