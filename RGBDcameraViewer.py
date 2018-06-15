@@ -101,7 +101,9 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         self._frame_height = [480]
 
         self._model = None
-        
+
+        self._img = None
+
         # </rtc-template>
 
 
@@ -184,10 +186,10 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
     def onActivated(self, ec_id):
         print('Start image view')
 
-        cv2.namedWindow("img", cv2.WINDOW_AUTOSIZE)
+        #cv2.namedWindow("img", cv2.WINDOW_AUTOSIZE)
 
-        m_img = np.zeros((640, 480, 3), np.uint8)
-        
+        self._img = np.zeros((480, 640, 3), np.uint8)
+
         return RTC.RTC_OK
     
         ##
@@ -219,22 +221,32 @@ class RGBDcameraViewer(OpenRTM_aist.DataFlowComponentBase):
         #
         #
     def onExecute(self, ec_id):
-
+        
+        width = self._frame_width[0]
+        height = self._frame_height[0]
+        # channels = 3
+        
         if self._rgbdCameraImageIn.isNew():
-            m_color_data = self._rgbdCameraImageIn.read()
-
-            for i in range(0, *height):
-                for j in range(0, *width):
-                    index = (i * array(width) + j) * 3
-                    m_img[h, w][2] = m_color_data.data.cameraImage.image.raw_data[index + 2] # b
-                    m_img[h, w][1] = self._rgbdCameraImageIn.data.cameraImage.image.raw_data[index + 1] # g
-                    m_img[h, w][0] = self._rgbdCameraImageIn.data.cameraImage.image.raw_data[index + 0] # r
-            cv2.imshow('image', m_img)
-
+            m_img = self._rgbdCameraImageIn.read()
+            cvimage = np.fromstring(m_img.data.cameraImage.image.raw_data, dtype = np.uint8).reshape(height, width, -1)
             
-        width = self._frame_width
-        height = self._frame_height
-        channels = 3
+            #print "get image data."
+            #print  m_img.data.cameraImage.image.format 
+            
+            # for h in range(height):
+            #     for w in range(width):
+            #         index = (h * width + w) * 3
+
+                    #print index
+                    #self._img[h, w][0] = m_img.data.cameraImage.image.raw_data[index + 0] # r
+                    #print "myu"
+                    #self._img[h, w][1] = m_img.data.cameraImage.image.raw_data[index + 1] # g
+                    #print "myumyu"
+                    #self._img[h, w][2] = m_img.data.cameraImage.image.raw_data[index + 2] # b
+
+                        
+            cv2.imshow('image', cvimage)#self._img)
+            cv2.waitKey(1)
 
     
         return RTC.RTC_OK
